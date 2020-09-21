@@ -1,46 +1,53 @@
 # FindAndReplaceByProjectWithExclusions
 
-__Найти и заменить по проекту с исключением путей__
+Sublime provides settings for excluding paths from the indexing process, as well
+as settings for excluding paths from the sidebar (from the project). However,
+there is no setting to exclude files from "project file search".
 
-Сублайм предоставляет настройки для исключения файлов и папок из процесса
-индексации, а так же настройки для исключения из боковой панели (из проекта). Однако нет
-настрек для исключения файлов из "поиска по файлам проекта".
+The project may contain logs or other data files that should be present in the
+project, but they should not be searched, since the files are large or we want
+to search only by code.
 
-В проекте могут быть логи и другие файлы данных, которые должны присутствовать в
-проекте, но по ним не должен происходить поиск, так как файлы большие или мы
-хотим искать по коду а не по данным.
+The package will allow you to configure exclusions separately for each project.
 
-Этот пакет позволит добавить исключения отдельно для каждого проекта.
+## Install
 
-## Установка
+| ОС            | Команды                                                                                   |
+| ---           | ---                                                                                       |
+| Mac           | `cmd+shift+p` → Package Control: Install Package → FindAndReplaceByProjectWithExclusions  |
+| Linux/Windows | `ctrl+shift+p` → Package Control: Install Package → FindAndReplaceByProjectWithExclusions |
 
-## Настройки
+## Settings
 
-Чтобы добавить такое исключение в проект необходимо:
-
-1. Внестинастройку в проект файла `<project_name>.sublime-project`:
+1. Add exceptions to project file `alt+p` &#8594; Edit Project:
 
 ```json
 {
-  …
+  …,
   "settings":
   {
-    "FindAndReplaceByProjectWithPathsExclusion": [
+    "find_and_replace_by_project_with_exclusions": [
       "*.log",
       "*.sqlite3",
       "node_modules/",
-      "db/migrate/",
+      "db/migrate/"
     ]
   }
 }
 ```
 
-2. Назначить сочетание клавишь на команду в файле
-`~/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap`:
+2. Assign keyboard shortcut `alt+n` &#8594; Key Bindings:
 
 ```json
 [
-  …
-  { "keys": ["ctrl+shift+f"], "command": "collapse_folders_find_and_replace_in_project" }
+  …,
+
+  // Find And Replace By Project With Exclusions
+  { "keys": ["ctrl+k", "ctrl+f"], "command": "find_and_replace_by_project_with_exclusions" },
+  {
+    "keys": ["ctrl+shift+k", "ctrl+shift+f"],
+    "command": "find_and_replace_by_project_with_exclusions",
+    "args": {"from_current_file_path": true}
+  },
 ]
 ```
