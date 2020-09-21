@@ -8,14 +8,14 @@ class FindAndReplaceByProjectWithExclusions(sublime_plugin.TextCommand):
   def run(self, edit, from_current_file_path=None):
 
     # Текущее окно сублайма
-    window = sublime.active_window()
+    window = self.view.window()
 
     # В окне - проект, берём его настройки
-    data = window.project_data()
+    dict_project = window.project_data()
 
     # Определим exclusions - безопасным извлечением интересуемой настройки из многоуровнего словаря
     # через get.
-    exclusions_list = data.get('settings', {}).get("find_and_replace_by_project_with_exclusions")
+    exclusions_list = dict_project.get('settings', {}).get("find_and_replace_by_project_with_exclusions")
     exclusions = None
     if exclusions_list is not None:
       exclusions = ', '.join('-' + exclusion for exclusion in exclusions_list)
@@ -25,15 +25,11 @@ class FindAndReplaceByProjectWithExclusions(sublime_plugin.TextCommand):
     sublime_project_file_path = window.project_file_name()
     is_project = sublime_project_file_path is not None
     project_path = None
-    if sublime_project_file_path != None:
-      project_file = open(sublime_project_file_path)
-      json_project = project_file.read()
-      dict_project = json.loads(json_project)
-      if dict_project is not None and 'folders' in dict_project and dict_project['folders'][0] is not None:
-        relative_first_folder_path = dict_project['folders'][0]['path']
-        if relative_first_folder_path == '.' or relative_first_folder_path == './':
-          relative_first_folder_path = ''
-        project_path = os.path.join(os.path.dirname(sublime_project_file_path), relative_first_folder_path)
+    if is_project and dict_project is not None and 'folders' in dict_project and dict_project['folders'][0] is not None:
+      relative_first_folder_path = dict_project['folders'][0]['path']
+      if relative_first_folder_path == '.' or relative_first_folder_path == './':
+        relative_first_folder_path = ''
+      project_path = os.path.join(os.path.dirname(sublime_project_file_path), relative_first_folder_path)
 
     # Определим dir_path - путь к директории текущего открытого файла (если
     # таковой открыт).
@@ -64,9 +60,6 @@ class FindAndReplaceByProjectWithExclusions(sublime_plugin.TextCommand):
       "regex": False,
       "where": where_string
     }
-
-    # if where_string is not None:
-    #   panel_args.update({"where": where_string})
 
     # Показываем панель с настройками в panel_args
     self.view.window().run_command(
