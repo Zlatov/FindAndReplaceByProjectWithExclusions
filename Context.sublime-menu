@@ -1,0 +1,6 @@
+[
+  {
+    "caption": "Find and Replace with exclusions",
+    "command": "find_and_replace_by_project_with_exclusions"
+  }
+]
