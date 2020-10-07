@@ -41,7 +41,6 @@ _Sublime_ предоставляет настройки для исключен�
 
 ```json
 [
-  // Find And Replace By Project With Exclusions
   { "keys": ["ctrl+k", "ctrl+f"], "command": "find_and_replace_by_project_with_exclusions" },
   {
     "keys": ["ctrl+shift+k", "ctrl+shift+f"],
