@@ -1,8 +1,9 @@
-# FindAndReplaceByProjectWithExclusions
+__Select language README.md__
 
-## Select language README.md
 - en [English](README.md)
 - ru [Русский](README-ru.md)
+
+# FindAndReplaceByProjectWithExclusions
 
 Sublime provides settings for excluding paths from the indexing process, as well
 as settings for excluding paths from the sidebar (from the project). However,
