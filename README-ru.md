@@ -1,5 +1,9 @@
 # FindAndReplaceByProjectWithExclusions
 
+## Выбрать язык README.md
+- en [English](README.md)
+- ru [Русский](README-ru.md)
+
 __Найти и заменить по проекту с исключениями__
 
 _Sublime_ предоставляет настройки для исключения путей из процесса индексации, а
